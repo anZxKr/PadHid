@@ -23,9 +23,7 @@ class HidSink(private val dev: String, private val size: Int) {
         lastTry = now
         closeQuiet()
         return try {
-            val p = ProcessBuilder("su", "-c", "exec dd of=$dev bs=$size conv=notrunc 2>/dev/null")
-                .redirectOutput(ProcessBuilder.Redirect.DISCARD)
-                .redirectError(ProcessBuilder.Redirect.DISCARD)
+            val p = ProcessBuilder("su", "-c", "exec dd of=$dev bs=$size conv=notrunc >/dev/null 2>&1")
                 .start()
             proc = p
             out = p.outputStream
